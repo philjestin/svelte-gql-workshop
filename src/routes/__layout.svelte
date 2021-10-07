@@ -1,2 +1,5 @@
 <script>import "../app.css";</script>
-<slot></slot>
+
+<main class="container max-w-xl mx-auto px-4">
+  <slot></slot>
+</main>

@@ -13,8 +13,6 @@
 
 <script>
   export let posts;
-
-  console.log({posts})
 </script>
 
 <svelt:head>
@@ -46,7 +44,7 @@
           {/if}
         </div>
         <div class="mt-2">
-          <a href={`/posts/${post.slug}`} class="btn">Read</a>
+          <a sveltekit:prefetch href={`/posts/${post.slug}`} class="btn btn-outline btn-primary">Read</a>
         </div>
       </figure>
     </li>
