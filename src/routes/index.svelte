@@ -1,28 +1,12 @@
 <script context="module">
-  import { gql, GraphQLClient } from "graphql-request";
+  import { client } from "$lib/graphql-client"
+  import { gql } from "graphql-request";
 
-  export async function load() {
-    const client = new GraphQLClient('https://api-us-west-2.graphcms.com/v2/ckuh5l8ip09qc01xpal9t476s/master');
-
-    const query = gql`
-      query Posts {
-        posts {
-          title
-          slug
-          date
-          excerpt
-          tags
-          coverImage {
-            url
-          }
-        }
-      }
-    `;
-
-    const { posts } = await client.request(query);
-
-    return { 
-      props: { posts }
+  export async function load({ fetch }) {
+    const res = await fetch('/posts.json');
+    if (res.ok) {
+      const posts = await res.json();
+      return { props: posts }
     }
   }
 </script>
@@ -33,7 +17,7 @@
   console.log({posts})
 </script>
 
-<pre>{JSON.stringify(posts)}</pre>
+<pre>{JSON.stringify(posts, null, 2)}</pre>
 
 <h1>Welcome to SvelteKit</h1>
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
