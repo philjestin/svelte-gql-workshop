@@ -17,13 +17,38 @@
   console.log({posts})
 </script>
 
-<pre>{JSON.stringify(posts, null, 2)}</pre>
+<svelt:head>
+  <title>Jamstack Conf Blog</title>
+</svelt:head>
 
 <h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
-<style>
-  p {
-    color: red;
-  }
-</style>
+<ul>
+  {#each posts as post}
+    <li class="card text-center shadow-2xl mb-20">
+      <figure class="px-10 pt-10">
+        {#if post.coverImage.url}
+          <img class="rounded-xl" src={post.coverImage.url} alt={`cover image for ${post.title}`} />
+        {:else}
+          <img class="rounded-xl" src="/default-cover-image.png" alt="default cover image" />
+        {/if}
+        <h2 class="title font-bold text-2xl mb-2">
+          {post.title}
+        </h2>
+        <p class="mb-2">{post.excerpt}</p>
+        <div>
+          {#if post.tags}
+            {#each post.tags as tag}
+              <span class="badge badge-primary">
+                {tag}
+              </span>
+            {/each}
+          {/if}
+        </div>
+        <div class="mt-2">
+          <a href={`/posts/${post.slug}`} class="btn">Read</a>
+        </div>
+      </figure>
+    </li>
+  {/each}
+</ul>
